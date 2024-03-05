@@ -18,9 +18,9 @@ func (s *Service) DaysLeft() int {
 	dur := time.Until(data)
 	return int(dur.Hours())/24
 }
-func (s *Service) DiffDays(data time.Time) int {
+func (s *Service) DiffDays(data time.Time) int64 {
 	dur := time.Until(data)
-	return int(dur.Hours())/24
+	return int64(dur.Hours())/24
 }
 func (s *Service)ParsDate(r *http.Request)(time.Time, error){
 	dateStr := r.FormValue("date")

@@ -8,7 +8,7 @@ import (
 
 type Service interface {
 	DaysLeft() int
-	DiffDays(time.Time) int
+	DiffDays(time.Time) int64
 	ParsDate(*http.Request) (time.Time, error)
 }
 
@@ -24,19 +24,20 @@ func New(s Service) *Endpoint {
 
 func (e *Endpoint) Status(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
+
 		http.ServeFile(w, r, "cmd\\time-task\\form.html")
 		d := e.s.DaysLeft()
-		fmt.Fprintf(w, "Days left : %d", d+1)
+		fmt.Fprintf(w, "Days left : %d", d)
 
 	} else if r.Method == http.MethodPost {
-		date, err := e.s.ParsDate(r)
 
+		date, err := e.s.ParsDate(r)
 		if err != nil {
 			http.Error(w, "Date parsing error!", http.StatusBadRequest)
 			return
 		}
 
 		res := e.s.DiffDays(date)
-		fmt.Fprintf(w, "Days left : %d", res+1)
+		fmt.Fprintf(w, "Days left : %d", res)
 	}
 }
