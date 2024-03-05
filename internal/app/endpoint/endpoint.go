@@ -16,7 +16,7 @@ type Endpoint struct {
 func New(s Service) *Endpoint{
 	return &Endpoint{
 		s:s,
-	}
+	}//
 }
 
 
